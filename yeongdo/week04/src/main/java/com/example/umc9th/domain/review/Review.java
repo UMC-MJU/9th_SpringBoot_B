@@ -32,7 +32,7 @@ public class Review extends BaseEntity {
     @Column(name = "rating", nullable = false)
     private int rating;
 
-    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private ReviewReply reviewReply;
 
 }

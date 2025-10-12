@@ -27,7 +27,7 @@ public class Inquiry extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private InquiryStatus status;
 
-    @OneToOne(mappedBy = "inquiry", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "inquiry", fetch = FetchType.LAZY,  cascade = CascadeType.REMOVE)
     private InquiryAnswer inquiryAnswer;
 
     // 초기 설계 때는 answered_at 필드를 두기로 했었는데 InquiryAnswer에 두는 게 맞아보임..
