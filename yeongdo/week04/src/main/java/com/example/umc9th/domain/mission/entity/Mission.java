@@ -39,6 +39,7 @@ public class Mission {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
+    @Column(name = "mission_type", nullable = false, length = 20)
     private MissionType type = MissionType.VISIT;
 
     @Column(name = "title", length = 120, nullable = false)

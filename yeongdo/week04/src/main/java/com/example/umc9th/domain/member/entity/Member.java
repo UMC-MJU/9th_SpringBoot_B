@@ -40,10 +40,10 @@ public class Member extends BaseEntity {
     @Builder.Default
     MemberStatus memberStatus = MemberStatus.ACTIVE;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false, length = 13)
     private String phoneNumber;
 
     @Column(name = "gender", nullable = false)
