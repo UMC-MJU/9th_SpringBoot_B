@@ -1,6 +1,7 @@
 package com.example.umc9th.domain.review.entity;
 
 import com.example.umc9th.global.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,5 +21,7 @@ public class Reply extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Review review;
 }

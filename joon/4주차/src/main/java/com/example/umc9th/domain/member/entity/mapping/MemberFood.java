@@ -2,6 +2,7 @@ package com.example.umc9th.domain.member.entity.mapping;
 
 import com.example.umc9th.domain.member.entity.Food;
 import com.example.umc9th.domain.member.entity.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,10 +19,14 @@ public class MemberFood {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("memberId")
     @JoinColumn(name = "member_id")
+    @ToString.Exclude
+    @JsonIgnore
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("foodId")
     @JoinColumn(name = "food_id")
+    @ToString.Exclude
+    @JsonIgnore
     private Food food;
 }

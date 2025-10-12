@@ -7,6 +7,7 @@ import com.example.umc9th.domain.member.enums.Gender;
 import com.example.umc9th.domain.member.enums.Status;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
 import com.example.umc9th.global.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -69,12 +70,19 @@ public class Member extends BaseEntity {
     private LocalDateTime inactiveDate;
 
     // 연관 관계 - Cascade ON DELETE
+    // 순환 참조 방지를 위한 Exclude 및 JsonIgnore 적용
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @JsonIgnore
     private List<MemberFood> memberFoodList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @JsonIgnore
     private List<MemberTerm> memberTermList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @JsonIgnore
     private List<MemberMission> memberMissionList = new ArrayList<>();
 }
