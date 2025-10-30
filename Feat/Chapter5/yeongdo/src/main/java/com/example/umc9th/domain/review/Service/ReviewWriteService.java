@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReviewService {
+public class ReviewWriteService {
     private final MissionAssignmentRepository missionAssignmentRepository;
     private final ReviewRepository reviewRepository;
 

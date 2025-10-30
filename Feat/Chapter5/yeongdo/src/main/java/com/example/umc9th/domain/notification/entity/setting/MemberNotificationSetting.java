@@ -3,16 +3,16 @@ package com.example.umc9th.domain.notification.entity.setting;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.notification.entity.NotificationType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Table(name = "member_notification_setting")
+@Table(name = "member_notification_setting",
+uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "type_code"})
+)
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class MemberNotificationSetting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
