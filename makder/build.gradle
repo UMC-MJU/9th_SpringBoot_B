@@ -24,9 +24,19 @@ repositories {
 	mavenCentral()
 }
 
+// QueryDSL 버전 변수
+def queryDslVersion = "5.0.0"
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// QueryDSL 의존성 추가
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -36,4 +46,21 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// QueryDSL Q-Type 클래스 생성 위치 설정
+def generatedDir = "$buildDir/generated/querydsl"
+
+tasks.withType(JavaCompile) {
+	options.getGeneratedSourceOutputDirectory().set(file(generatedDir))
+}
+
+sourceSets {
+	main.java.srcDirs += [ generatedDir ]
+}
+
+tasks.withType(JavaCompile) {
+	doFirst {
+		delete(file(generatedDir))
+	}
 }
