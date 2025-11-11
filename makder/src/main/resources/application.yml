@@ -1,0 +1,45 @@
+spring:
+  # 공통 설정
+  application:
+    name: "myapp"
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update # dev에서는 update, prod에서는 validate 또는 none이 더 안전합니다.
+    properties:
+      hibernate:
+        format_sql: true
+  # 기본 프로필을 dev로 설정
+  profiles:
+    active: dev
+
+---
+
+spring:
+  # 개발 환경 (dev) 프로필
+  config:
+    activate:
+      on-profile: "dev"
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/makderdb?serverTimezone=Asia/Seoul
+    username: root
+    password: mypassword
+
+---
+
+spring:
+  # 운영 환경 (prod) 프로필
+  config:
+    activate:
+      on-profile: "prod"
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PW}
+  jpa:
+    hibernate:
+      ddl-auto: validate # 운영 환경에서는 validate로 변경하여 안전성 확보
