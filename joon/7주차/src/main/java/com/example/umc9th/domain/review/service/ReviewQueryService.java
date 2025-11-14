@@ -3,15 +3,20 @@ package com.example.umc9th.domain.review.service;
 import com.example.umc9th.domain.review.dto.ReviewResDto;
 import com.example.umc9th.domain.review.entity.QReview;
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.domain.review.exception.ReviewException;
+import com.example.umc9th.domain.review.exception.code.ReviewErrorCode;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ReviewQueryService {
     private final ReviewRepository reviewRepository;
 
@@ -36,8 +41,13 @@ public class ReviewQueryService {
 
         List<Review> reviewList = reviewRepository.searchReview(builder);
 
+        // 검색 결과가 비어있으면 예외 발생
+        if (reviewList.isEmpty()) {
+            throw new ReviewException(ReviewErrorCode.REVIEW_NOT_FOUND);
+        }
+
         return reviewList.stream()
                 .map(ReviewResDto::from)
-                .toList();
+                .collect(Collectors.toList());
     }
 }
