@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.mission.dto;
+package com.example.umc9th.domain.mission.dto.res;
 
 import com.example.umc9th.domain.mission.entity.mapping.MemberMissionId;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.umc9th.domain.mission.repository;
 
-import com.example.umc9th.domain.mission.dto.MissionListDto;
-import com.example.umc9th.domain.mission.dto.MissionProgressDto;
+import com.example.umc9th.domain.mission.dto.res.MissionListDto;
+import com.example.umc9th.domain.mission.dto.res.MissionProgressDto;
 import com.example.umc9th.domain.mission.entity.Mission;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MissionRepository extends JpaRepository<Mission, Long> {
     // 해당 지역의 완료한 미션 달성 갯수
-    @Query("SELECT new com.example.umc9th.domain.mission.dto.MissionProgressDto(" +
+    @Query("SELECT new com.example.umc9th.domain.mission.dto.res.MissionProgressDto(" +
             "mb.id, r.id, COUNT(mm)) " +
             "FROM MemberMission mm " +
             "JOIN mm.member mb " +
@@ -27,7 +27,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     MissionProgressDto getCompletedMissionCount(@Param("memberId") Long memberId, @Param("regionId") Long regionId);
 
     // 도전 가능한 미션 목록
-    @Query("SELECT new com.example.umc9th.domain.mission.dto.MissionListDto(" +
+    @Query("SELECT new com.example.umc9th.domain.mission.dto.res.MissionListDto(" +
             "m.id, s.storeName, m.missionName, m.rewardPoint, " +
             "DATEDIFF(m.deadline, CURRENT_TIMESTAMP)) " +
             "FROM Mission m " +
