@@ -1,1 +1,13 @@
 .DS_Store
+
+.DS_Store
+**/.DS_Store
+
+.DS_Store
+**/.DS_Store
+
+**/build/
+**/.gradle/
+**/.idea/
+*.iml
+.DS_Store
