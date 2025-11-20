@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IntelliJ / IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Gradle
+.gradle/
+**/build/
+**/out/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Java
+*.class
+*.log
+
+# Spring profiles (원본 application.yml은 커밋, 로컬/비밀 프로필은 제외)
+application-*.yml
+!application.yml
+
+# Env / Secrets
+.env
+.env.*
+
+.idea/
+*.iml
+.run/
+.idea/runConfigurations/
