@@ -20,4 +20,16 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Me
             "JOIN m.store s " +
             "WHERE mm.member.id = :memberId")
     Page<MemberMissionDto> findMyMissionList(@Param("memberId") Long memberId, Pageable pageable);
+
+    // 리뷰 작성 전 미션 완료 여부 검증
+    @Query("""
+        SELECT COUNT(mm) > 0
+        FROM MemberMission mm
+        WHERE mm.member.id = :memberId
+          AND mm.mission.store.id = :storeId
+          AND mm.isCompleted = TRUE
+        """)
+    boolean existsCompletedByMemberAndStore(@Param("memberId") Long memberId,
+                                            @Param("storeId") Long storeId);
+
 }
