@@ -1,6 +1,6 @@
 package com.example.umc9th.domain.mission.repository;
 
-import com.example.umc9th.domain.mission.dto.res.MemberMissionDto;
+import com.example.umc9th.domain.mission.dto.res.MemberMissionResDto;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMissionId;
 import org.springframework.data.domain.Page;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberMissionRepository extends JpaRepository<MemberMission, MemberMissionId> {
     // 진행중, 완료한 미션 목록
-    @Query("SELECT new com.example.umc9th.domain.mission.dto.res.MemberMissionDto(" +
+    @Query("SELECT new com.example.umc9th.domain.mission.dto.res.MemberMissionResDto(" +
             "mm.id, m.rewardPoint, s.storeName, m.missionName, mm.isCompleted) " +
             "FROM MemberMission mm " +
             "JOIN mm.mission m " +
             "JOIN m.store s " +
             "WHERE mm.member.id = :memberId")
-    Page<MemberMissionDto> findMyMissionList(@Param("memberId") Long memberId, Pageable pageable);
+    Page<MemberMissionResDto> findMyMissionList(@Param("memberId") Long memberId, Pageable pageable);
 
     // 리뷰 작성 전 미션 완료 여부 검증
     @Query("""
