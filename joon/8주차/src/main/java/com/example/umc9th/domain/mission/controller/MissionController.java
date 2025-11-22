@@ -4,6 +4,7 @@ import com.example.umc9th.domain.mission.dto.req.MissionReqDto;
 import com.example.umc9th.domain.mission.dto.res.MissionListDto;
 import com.example.umc9th.domain.mission.dto.res.MissionProgressDto;
 import com.example.umc9th.domain.mission.dto.res.MissionResDto;
+import com.example.umc9th.domain.mission.exception.code.MissionSuccessCode;
 import com.example.umc9th.domain.mission.service.MissionCommandService;
 import com.example.umc9th.domain.mission.service.MissionQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -44,6 +45,6 @@ public class MissionController {
     @PostMapping("/stores/{storeId}/missions/register")
     public ApiResponse<MissionResDto.CreateDto> createMission(@PathVariable Long storeId, @RequestBody @Valid MissionReqDto.CreateDto dto) {
         MissionResDto.CreateDto response = missionCommandService.createMission(storeId, dto);
-        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, response);
+        return ApiResponse.onSuccess(MissionSuccessCode.CREATED, response);
     }
 }

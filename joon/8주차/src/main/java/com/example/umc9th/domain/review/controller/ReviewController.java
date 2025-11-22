@@ -2,6 +2,7 @@ package com.example.umc9th.domain.review.controller;
 
 import com.example.umc9th.domain.review.dto.req.ReviewReqDto;
 import com.example.umc9th.domain.review.dto.res.ReviewResDto;
+import com.example.umc9th.domain.review.exception.code.ReviewSuccessCode;
 import com.example.umc9th.domain.review.service.ReviewCommandService;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -35,6 +36,6 @@ public class ReviewController {
     @PostMapping("/stores/{storeId}/reviews/register")
     public ApiResponse<ReviewResDto> createReview(@PathVariable Long storeId, @RequestBody @Valid ReviewReqDto.CreateDto dto) {
         ReviewResDto response = reviewCommandService.createReview(storeId, dto);
-        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, response);
+        return ApiResponse.onSuccess(ReviewSuccessCode.CREATED, response);
     }
 }

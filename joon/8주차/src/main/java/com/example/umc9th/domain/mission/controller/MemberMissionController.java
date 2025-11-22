@@ -2,6 +2,7 @@ package com.example.umc9th.domain.mission.controller;
 
 import com.example.umc9th.domain.mission.dto.req.MemberMissionReqDto;
 import com.example.umc9th.domain.mission.dto.res.MemberMissionResDto;
+import com.example.umc9th.domain.mission.exception.code.MemberMissionSuccessCode;
 import com.example.umc9th.domain.mission.service.MemberMissionCommandService;
 import com.example.umc9th.domain.mission.service.MemberMissionQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -32,6 +33,6 @@ public class MemberMissionController {
     @PostMapping("/challenge")
     public ApiResponse<MemberMissionResDto> challengeMission(@RequestBody @Valid MemberMissionReqDto.CreateDto dto) {
         MemberMissionResDto response = memberMissionCommandService.challengeMission(dto.memberId(), dto.missionId());
-        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, response);
+        return ApiResponse.onSuccess(MemberMissionSuccessCode.CHALLENGED, response);
     }
 }
