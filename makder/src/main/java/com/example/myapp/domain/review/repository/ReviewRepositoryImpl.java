@@ -74,9 +74,9 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
             return null;
         }
         if (star == 5) {
-            return review.star.eq(5.0);
+            return review.rating.eq(5.0);
         }
         // star.doubleValue()를 사용하여 정수를 double로 변환
-        return review.star.goe(star.doubleValue()).and(review.star.lt(star + 1.0));
+        return review.rating.goe(star.doubleValue()).and(review.rating.lt(star + 1.0));
     }
 }

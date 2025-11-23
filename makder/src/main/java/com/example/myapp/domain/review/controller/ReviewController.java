@@ -2,6 +2,9 @@ package com.example.myapp.domain.review.controller;
 
 import com.example.myapp.domain.review.entity.Review;
 import com.example.myapp.domain.review.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +30,12 @@ public class ReviewController {
      * @param pageable (Optional) 페이징 정보 (예: ?page=0&size=10)
      * @return 페이징된 리뷰 목록
      */
+    @Operation(summary = "내가 작성한 리뷰 목록 조회 API", description = "내가 작성한 리뷰 목록을 동적 쿼리를 사용하여 조회합니다.")
+    @Parameters({
+            @Parameter(name = "storeId", description = "가게 ID"),
+            @Parameter(name = "star", description = "별점"),
+            @Parameter(name = "pageable", description = "페이징 정보")
+    })
     @GetMapping("/my")
     public ResponseEntity<Page<Review>> getMyReviews(
             @RequestParam(required = false) Long storeId,
