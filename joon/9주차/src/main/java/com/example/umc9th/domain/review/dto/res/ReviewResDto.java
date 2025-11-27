@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ReviewResDto {
 
+    // 내가 쓴 리뷰 한 건에 대한 정보 DTO
     @Getter
     @Builder
     @NoArgsConstructor
@@ -33,6 +34,7 @@ public class ReviewResDto {
         }
     }
 
+    // 리뷰 생성 후 반환되는 응답 DTO
     @Getter
     @Builder
     @NoArgsConstructor
@@ -59,6 +61,7 @@ public class ReviewResDto {
         }
     }
 
+    // 가게의 리뷰 목록 + 페이징 정보를 담는 DTO
     @Builder
     public record ReviewPreViewListDto(
             List<ReviewPreViewDto> reviewList,
@@ -69,6 +72,7 @@ public class ReviewResDto {
             Boolean isLast
     ) {}
 
+    // 가게 리뷰 한 건을 간략하게 보여줄 때 사용하는 DTO
     @Builder
     public record ReviewPreViewDto(
             String ownerNickname,
@@ -76,4 +80,15 @@ public class ReviewResDto {
             String body,
             LocalDate createdAt
     ){}
+
+    // 내가 작성한 리뷰 목록 + 페이징 정보를 담는 DTO
+    @Builder
+    public record MyReviewPageDto(
+            List<MyReviewDto> reviewList,
+            Integer listSize,
+            Integer totalPage,
+            Long totalElements,
+            Boolean isFirst,
+            Boolean isLast
+    ) {}
 }

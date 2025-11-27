@@ -70,4 +70,19 @@ public class ReviewQueryService {
 
         return ReviewConverter.toReviewPreviewListDTO(result);
     }
+
+    // 내가 작성한 리뷰 목록 조회 (페이징, 한 페이지 10개)
+    public ReviewResDto.MyReviewPageDto findMyReviews(Long memberId, Integer page) {
+        int pageIndex = page - 1;
+
+        PageRequest pageRequest = PageRequest.of(pageIndex, 10);
+
+        Page<Review> result = reviewRepository.findAllByMemberId(memberId, pageRequest);
+
+        if (result.isEmpty()) {
+            throw new ReviewException(ReviewErrorCode.REVIEW_NOT_FOUND);
+        }
+
+        return ReviewConverter.toMyReviewPageDto(result);
+    }
 }

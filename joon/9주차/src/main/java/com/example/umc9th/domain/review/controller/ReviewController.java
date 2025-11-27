@@ -45,4 +45,14 @@ public class ReviewController implements ReviewControllerDocs{
         ReviewSuccessCode code = ReviewSuccessCode.FOUND;
         return ApiResponse.onSuccess(code, reviewQueryService.findReview(storeName, page));
     }
+
+    // 내가 작성한 리뷰 목록 조회 API
+    @GetMapping("/members/{memberId}/reviews")
+    public ApiResponse<ReviewResDto.MyReviewPageDto> getMyReviews(
+            @PathVariable Long memberId,
+            @RequestParam(name = "page", defaultValue = "1") Integer page
+    ) {
+        ReviewResDto.MyReviewPageDto result = reviewQueryService.findMyReviews(memberId, page);
+        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, result);
+    }
 }
