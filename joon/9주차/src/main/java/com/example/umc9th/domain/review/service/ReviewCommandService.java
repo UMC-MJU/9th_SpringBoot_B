@@ -29,7 +29,7 @@ public class ReviewCommandService {
     private final MemberMissionRepository memberMissionRepository;
 
     @Transactional
-    public ReviewResDto createReview(Long storeId, ReviewReqDto.CreateDto dto) {
+    public ReviewResDto.ReviewCreateDto createReview(Long storeId, ReviewReqDto.CreateDto dto) {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
 

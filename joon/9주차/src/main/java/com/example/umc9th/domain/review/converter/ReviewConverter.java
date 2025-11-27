@@ -6,7 +6,9 @@ import com.example.umc9th.domain.review.dto.res.ReviewResDto;
 import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.entity.ReviewPhoto;
 import com.example.umc9th.domain.store.entity.Store;
+import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,33 @@ public class ReviewConverter {
     }
 
     // Entity -> DTO
-    public static ReviewResDto toReviewResDto(Review review) {
-        return ReviewResDto.from(review);
+    public static ReviewResDto.ReviewCreateDto toReviewResDto(Review review) {
+        return ReviewResDto.ReviewCreateDto.from(review);
+    }
+
+    // result -> Dto
+    public static ReviewResDto.ReviewPreViewListDto toReviewPreviewListDTO(
+            Page<Review> result
+    ){
+        return ReviewResDto.ReviewPreViewListDto.builder()
+                .reviewList(result.getContent().stream()
+                        .map(ReviewConverter::toReviewPreviewDto)
+                        .toList()
+                )
+                .listSize(result.getSize())
+                .totalPage(result.getTotalPages())
+                .totalElements(result.getTotalElements())
+                .isFirst(result.isFirst())
+                .isLast(result.isLast())
+                .build();
+    }
+
+    public static ReviewResDto.ReviewPreViewDto toReviewPreviewDto(Review review) {
+        return ReviewResDto.ReviewPreViewDto.builder()
+                .ownerNickname(review.getMember().getName())
+                .score(review.getRating())
+                .body(review.getComment())
+                .createdAt(LocalDate.from(review.getCreatedAt()))
+                .build();
     }
 }
