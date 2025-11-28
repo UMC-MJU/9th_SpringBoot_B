@@ -19,35 +19,38 @@ public class MissionQueryService {
     private final MissionRepository missionRepository;
     private final RegionRepository regionRepository;
 
-    public MissionProgressDto getCompletedMissionCount(Long memberId, Long regionId) {
+    // 해당 지역의 완료한 미션 달성 갯수
+    public MissionResDto.MissionProgressDto getCompletedMissionCount(Long memberId, Long regionId) {
         // 지역 존재 여부 확인
         boolean regionExists = regionRepository.existsById(regionId);
         if (!regionExists) {
             throw new MissionException(MissionErrorCode.REGION_NOT_FOUND);
         }
 
-        MissionProgressDto result = missionRepository.getCompletedMissionCount(memberId, regionId);
+        Long count = missionRepository.getCompletedMissionCount(memberId, regionId);
 
         // 결과가 null일 경우, 완료한 미션이 0개라는 의미이므로 DTO를 직접 생성하여 반환
-        if (result == null) {
-            return MissionProgressDto.builder()
-                    .memberId(memberId)
-                    .regionId(regionId)
-                    .completedMissions(0)
-                    .build();
+        if (count == null) {
+            count = 0L;
         }
 
-        return result;
+        return MissionResDto.MissionProgressDto.builder()
+                .memberId(memberId)
+                .regionId(regionId)
+                .completedMissions(count)
+                .build();
     }
 
-    public Page<MissionListDto> getAvailableMissions(Long memberId, Long regionId, int page) {
+    // 도전 가능한 미션 목록
+    public Page<MissionResDto.MissionListDto> getAvailableMissions(Long memberId, Long regionId, int page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        Page<MissionListDto> missionPage = missionRepository.findAvailableMissions(memberId, regionId, pageRequest);
+
+        Page<Mission> missionPage = missionRepository.findAvailableMissions(memberId, regionId, pageRequest);
 
         if (missionPage.isEmpty()) {
             throw new MissionException(MissionErrorCode.MISSION_NOT_FOUND);
         }
 
-        return missionPage;
+        return missionPage.map(MissionConverter::toMissionListDto);
     }
 }

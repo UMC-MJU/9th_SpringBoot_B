@@ -9,9 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MissionConverter {
-    private static final DateTimeFormatter DEADLINE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
-    // Dto -> Entity
+    // Dto -> Entity (미션 생성용)
     public static Mission toMission(Store store, MissionReqDto.CreateDto dto) {
         LocalDateTime deadline = LocalDateTime.parse(dto.deadline(), DEADLINE_FORMATTER);
 
@@ -23,7 +21,7 @@ public class MissionConverter {
                 .build();
     }
 
-    // Entity -> DTO
+    // Entity -> DTO (미션 생성 응답용)
     public static MissionResDto.CreateDto toMissionResDto(Mission mission) {
         return MissionResDto.CreateDto.builder()
                 .id(mission.getId())
@@ -31,6 +29,22 @@ public class MissionConverter {
                 .missionName(mission.getMissionName())
                 .rewardPoint(mission.getRewardPoint())
                 .deadline(mission.getDeadline())
+                .build();
+    }
+
+    // Entity -> DTO (가게/지역 미션 목록에서 한 건)
+    public static MissionResDto.MissionListDto toMissionListDto(Mission mission) {
+        int daysLeft = (int) ChronoUnit.DAYS.between(
+                LocalDate.now(),
+                mission.getDeadline().toLocalDate()
+        );
+
+        return MissionResDto.MissionListDto.builder()
+                .missionId(mission.getId())
+                .storeName(mission.getStore().getStoreName())
+                .missionName(mission.getMissionName())
+                .rewardPoint(mission.getRewardPoint())
+                .daysLeft(daysLeft)
                 .build();
     }
 }
