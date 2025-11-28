@@ -41,4 +41,15 @@ public class MissionResDto {
         private Long regionId;
         private Long completedMissions;
     }
+
+    // 가게의 미션 목록 + 페이징 정보를 담는 DTO
+    @Builder
+    public record StoreMissionPageDto(
+            List<MissionListDto> missionList,
+            Integer listSize,
+            Integer totalPage,
+            Long totalElements,
+            Boolean isFirst,
+            Boolean isLast
+    ) {}
 }

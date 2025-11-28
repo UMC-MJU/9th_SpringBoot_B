@@ -45,4 +45,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             @Param("regionId") Long regionId,
             Pageable pageable
     );
+
+    // 특정 가게의 미션 목록 조회
+    Page<Mission> findMissionByStoreId(Long storeId, Pageable pageable);
 }

@@ -1,7 +1,8 @@
 package com.example.umc9th.domain.mission.service;
 
-import com.example.umc9th.domain.mission.dto.res.MissionListDto;
-import com.example.umc9th.domain.mission.dto.res.MissionProgressDto;
+import com.example.umc9th.domain.mission.converter.MissionConverter;
+import com.example.umc9th.domain.mission.dto.res.MissionResDto;
+import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.mission.exception.MissionException;
 import com.example.umc9th.domain.mission.exception.code.MissionErrorCode;
 import com.example.umc9th.domain.mission.repository.MissionRepository;
@@ -52,5 +53,20 @@ public class MissionQueryService {
         }
 
         return missionPage.map(MissionConverter::toMissionListDto);
+    }
+
+    // 특정 가게의 미션 목록 조회 (페이징, 한 페이지당 10개)
+    public MissionResDto.StoreMissionPageDto getStoreMissions(Long storeId, Integer page) {
+        int pageIndex = page - 1;
+
+        PageRequest pageRequest = PageRequest.of(pageIndex, 10);
+
+        Page<Mission> result = missionRepository.findMissionByStoreId(storeId, pageRequest);
+
+        if (result.isEmpty()) {
+            throw new MissionException(MissionErrorCode.MISSION_NOT_FOUND);
+        }
+
+        return MissionConverter.toStoreMissionPageDto(result);
     }
 }
