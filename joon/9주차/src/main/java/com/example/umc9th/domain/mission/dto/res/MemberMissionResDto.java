@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -31,4 +33,15 @@ public class MemberMissionResDto {
                 .isCompleted(memberMission.isCompleted())
                 .build();
     }
+
+    // 사용자가 진행중/완료한 미션 목록 + 페이징 정보를 담는 DTO
+    @Builder
+    public record MemberMissionPageDto(
+            List<MemberMissionResDto> missionList,
+            Integer listSize,
+            Integer totalPage,
+            Long totalElements,
+            Boolean isFirst,
+            Boolean isLast
+    ) {}
 }

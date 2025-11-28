@@ -6,28 +6,27 @@ import com.example.umc9th.domain.mission.exception.code.MemberMissionSuccessCode
 import com.example.umc9th.domain.mission.service.MemberMissionCommandService;
 import com.example.umc9th.domain.mission.service.MemberMissionQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
-import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/member-missions")
-public class MemberMissionController {
+public class MemberMissionController implements MemberMissionControllerDocs {
     private final MemberMissionQueryService memberMissionQueryService;
     private final MemberMissionCommandService memberMissionCommandService;
 
+    // 사용자가 진행중/완료한 미션 목록 조회 API
     @GetMapping("/list")
-    public ApiResponse<Page<MemberMissionResDto>> getMyMissions(
+    public ApiResponse<MemberMissionResDto.MemberMissionPageDto> getMyMissions(
             @RequestParam Long memberId,
-            @PageableDefault(size = 10) Pageable pageable) {
-
-        Page<MemberMissionResDto> responseDtoPage = memberMissionQueryService.getMyMissions(memberId, pageable);
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, responseDtoPage);
+            @RequestParam(name = "page", defaultValue = "1") Integer page
+    ) {
+        MemberMissionResDto.MemberMissionPageDto responseDto = memberMissionQueryService.getMyMissions(memberId, page);
+        return ApiResponse.onSuccess(MemberMissionSuccessCode.FOUND, responseDto);
     }
 
     @PostMapping("/challenge")

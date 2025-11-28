@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum MemberMissionSuccessCode implements BaseSuccessCode {
     CHALLENGED(HttpStatus.CREATED, "MEMBER_MISSION201_1", "성공적으로 미션을 등록했습니다."),
+    FOUND(HttpStatus.OK, "MEMBER_MISSION200_1", "성공적으로 사용자의 미션을 조회했습니다."),
     ;
 
     private final HttpStatus status;
