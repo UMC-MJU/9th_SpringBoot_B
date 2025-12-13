@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.mission.repository;
 
+import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.mission.entity.MissionAssignment;
 import com.example.umc9th.domain.mission.enums.MissionStatus;
@@ -31,7 +32,7 @@ public interface MissionAssignmentRepository extends JpaRepository<MissionAssign
         and ma.status = :status
 
 """)
-    Long countCompletedInRegion(Long memberId, Long regionid, MissionStatus status);
+    Long countCompletedInRegion(Long memberId, Long regionId, MissionStatus status);
 
     // 이미 종료된 미션 제외, 이미 참여했던 미션 제외하고 미션 목록 페이징
     @Query(
@@ -61,4 +62,14 @@ public interface MissionAssignmentRepository extends JpaRepository<MissionAssign
   """
     )
     Page<Mission> findAvailableMissions(Long memberId, Long regionId, Pageable pageable);
+
+
+    @EntityGraph(attributePaths = {"mission", "mission.store"})
+    @Query("""
+        select ma
+        from MissionAssignment ma
+        where ma.member = :member
+            and ma.status = :missionStatus
+""")
+    Page<MissionAssignment> findByMemberAndStatus(Member member, MissionStatus missionStatus, Pageable pageable);
 }

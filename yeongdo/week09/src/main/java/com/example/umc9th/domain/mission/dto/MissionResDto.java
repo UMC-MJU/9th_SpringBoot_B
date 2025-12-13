@@ -1,7 +1,7 @@
 package com.example.umc9th.domain.mission.dto;
 
-import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.mission.entity.MissionAssignment;
+import com.example.umc9th.domain.mission.enums.MissionStatus;
 import com.example.umc9th.domain.mission.enums.MissionType;
 import lombok.Builder;
 
@@ -58,5 +58,23 @@ public class MissionResDto {
                     .build();
         }
     }
+
+    @Builder
+    public record MemberMissionDto(
+            String missionTitle,
+            String description,
+            int baseReward,
+            MissionStatus missionStatus
+    ){}
+
+    @Builder
+    public record MemberMissionListDto(
+            List<MemberMissionDto> memberMissionList,
+            Integer listSize,
+            Integer totalPage,
+            Long totalElements,
+            Boolean isFirst,
+            Boolean isLast
+    ){}
 
 }

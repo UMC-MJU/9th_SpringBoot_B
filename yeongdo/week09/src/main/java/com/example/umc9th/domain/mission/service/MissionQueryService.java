@@ -9,4 +9,10 @@ public interface MissionQueryService {
     Page<MissionResDto.MyMissionPreviewDto> findMyMission(Long memberId, MissionStatus status, Pageable pageable);
 
     MissionResDto.StoreMissionListDto findStoreMission(String storeName, Integer page);
+
+    MissionResDto.MemberMissionListDto findMemberMission(
+            Long memberId,
+            Integer page,
+            MissionStatus status
+    );
 }

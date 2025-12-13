@@ -2,6 +2,7 @@ package com.example.umc9th.domain.mission.converter;
 
 import com.example.umc9th.domain.mission.dto.MissionResDto;
 import com.example.umc9th.domain.mission.entity.Mission;
+import com.example.umc9th.domain.mission.enums.MissionStatus;
 import org.springframework.data.domain.Page;
 
 
@@ -26,4 +27,6 @@ public class MissionConverter {
                 .isLast(result.isLast())
                 .build();
     }
+
+
 }

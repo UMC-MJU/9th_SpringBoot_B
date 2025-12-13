@@ -3,6 +3,7 @@ package com.example.umc9th.domain.mission.entity;
 import com.example.umc9th.domain.mission.enums.MissionType;
 import com.example.umc9th.domain.store.entity.Region;
 import com.example.umc9th.domain.store.entity.Store;
+import com.example.umc9th.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @SuperBuilder // 상속 구조에서 부모, 자식 필드 모두 포함한 빌더를 위해 (부모, 자식 둘 다 달아야 함)
-public class Mission {
+public class Mission{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
