@@ -28,4 +28,12 @@ public class MemberConverter {
                 .gender(dto.gender())
                 .build();
     }
+
+    // Entity -> DTO
+    public static MemberResDto.LoginDto toLoginDto(Member member, String accessToken) {
+        return MemberResDto.LoginDto.builder()
+                .memberId(member.getId())
+                .accessToken(accessToken)
+                .build();
+    }
 }

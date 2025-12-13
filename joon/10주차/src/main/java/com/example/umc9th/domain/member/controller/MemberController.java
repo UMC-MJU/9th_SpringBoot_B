@@ -29,4 +29,9 @@ public class MemberController {
     public ApiResponse<MemberResDto.JoinDto> registerMember(@RequestBody @Valid MemberReqDto.JoinDTO dto) {
         return ApiResponse.onSuccess(MemberSuccessCode.FOUND, memberCommandService.registerMember(dto));
     }
+
+    @PostMapping("/login")
+    public ApiResponse<MemberResDto.LoginDto> login(@RequestBody @Valid MemberReqDto.LoginDTO dto) {
+        return ApiResponse.onSuccess(MemberSuccessCode.FOUND, memberQueryService.login(dto));
+    }
 }
