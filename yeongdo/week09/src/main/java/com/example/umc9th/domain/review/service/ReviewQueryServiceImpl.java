@@ -31,8 +31,9 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         Member member = memberRepository.findById(memberId).
                 orElseThrow( () -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
+        int zeroBased = page - 1;
         // 멤버에 맞는 리뷰를 가져옴 (Offset  페이징)
-        PageRequest pageRequest = PageRequest.of(page, 10);
+        PageRequest pageRequest = PageRequest.of(zeroBased, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Review> myReviews = reviewRepository.findByMissionAssignment_Member_Id(memberId, pageRequest);
 
         return ReviewConverter.toMyReviewPreviewListDto(myReviews);
@@ -44,8 +45,9 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         Store store = storeRepository.findByName(storeName)
                 .orElseThrow( () -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
 
+        int zeroBased = page - 1;
         // 가게에 맞는 리뷰를 가져옴 (Offset 페이징)
-        PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createAt"));
+        PageRequest pageRequest = PageRequest.of(zeroBased, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Review> result = reviewRepository.findByMissionAssignment_Mission_Store(store, pageRequest);
 
         return ReviewConverter.toReviewPreviewListDto(result);
