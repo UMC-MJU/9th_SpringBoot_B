@@ -25,7 +25,7 @@ public class MemberController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, memberInfoDto);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/sign-up")
     public ApiResponse<MemberResDto.JoinDto> registerMember(@RequestBody @Valid MemberReqDto.JoinDTO dto) {
         return ApiResponse.onSuccess(MemberSuccessCode.FOUND, memberCommandService.registerMember(dto));
     }

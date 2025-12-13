@@ -7,6 +7,7 @@ import com.example.umc9th.domain.member.enums.Gender;
 import com.example.umc9th.domain.member.enums.SocialType;
 import com.example.umc9th.domain.member.enums.Status;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
+import com.example.umc9th.global.auth.enums.Role;
 import com.example.umc9th.global.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -44,6 +45,9 @@ public class Member extends BaseEntity {
 
     @Column(name = "password", length = 100, nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "phone", length = 15, unique = true)
     private String phone;
