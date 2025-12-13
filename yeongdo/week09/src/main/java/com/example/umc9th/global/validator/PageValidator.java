@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class PageValidator implements ConstraintValidator<CheckPage, Integer> {
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
-        boolean isValid = (value != null && value > 0);
+        boolean isValid = (value > 0);
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();

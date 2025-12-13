@@ -9,7 +9,7 @@ public interface ReviewControllerDocs {
 
 
     @Operation(
-            summary = "내가 작성한 리뷰 목록 조회 API By 영도 (개발 중)",
+            summary = "내가 작성한 리뷰 목록 조회 API By 영도",
             description = "내가 작성한 리뷰들을 모두 조회합니다. 페이지네이션으로 제공합니다."
     )
     @ApiResponses({

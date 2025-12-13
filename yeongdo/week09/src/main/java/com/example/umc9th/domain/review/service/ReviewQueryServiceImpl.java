@@ -53,5 +53,4 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         return ReviewConverter.toReviewPreviewListDto(result);
     }
 
-
 }

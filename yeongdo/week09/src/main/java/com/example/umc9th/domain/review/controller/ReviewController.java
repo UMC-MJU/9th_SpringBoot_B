@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.review.controller;
 
+import com.example.umc9th.domain.mission.dto.MissionResDto;
 import com.example.umc9th.domain.review.code.ReviewSuccessCode;
 import com.example.umc9th.domain.review.service.ReviewCommandService;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
@@ -25,8 +26,8 @@ public class ReviewController implements ReviewControllerDocs {
     @Override
     @GetMapping("/members/{memberId}/reviews")
     public ApiResponse<ReviewResDto.MyReviewPreviewListDto> getMyReviews(@PathVariable Long memberId,
-                                                                               @RequestParam(required = false) @CheckPage Integer page) {
-        return ApiResponse.onSuccess(ReviewSuccessCode.OK, reviewQueryService.findMyReviews(memberId, page));
+                                                                               @RequestParam @CheckPage Integer page) {
+        return ApiResponse.onSuccess(ReviewSuccessCode.MY_REVIEW_LIST_FOUND, reviewQueryService.findMyReviews(memberId, page));
     }
     // 가게에 리뷰 추가하기
     // member도 구분을 해야 해서 일단 이렇게 엔드포인트를 구성했습니다!
@@ -37,7 +38,7 @@ public class ReviewController implements ReviewControllerDocs {
             @RequestBody ReviewReqDto.CreateReview req
     ) {
 
-        return ApiResponse.onSuccess(ReviewSuccessCode.CREATED,
+        return ApiResponse.onSuccess(ReviewSuccessCode.REVIEW_CREATED,
                 reviewCommandService.writeReview(assignmentId, memberId,
                         req.title(), req.content(), req.rating()));
     }
@@ -47,11 +48,12 @@ public class ReviewController implements ReviewControllerDocs {
     @GetMapping("/reviews")
     public ApiResponse<ReviewResDto.ReviewPreviewListDto> getReviews(
             @RequestParam String storeName,
-            @RequestParam(required = false) @CheckPage Integer page
+            @RequestParam @CheckPage Integer page
     ) {
 
-        ReviewSuccessCode code = ReviewSuccessCode.OK;
+        ReviewSuccessCode code = ReviewSuccessCode.STORE_REVIEW_LIST_FOUND;
         return ApiResponse.onSuccess(code, reviewQueryService.findStoreReview(storeName, page));
     }
+
 
 }

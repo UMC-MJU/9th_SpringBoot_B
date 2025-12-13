@@ -29,7 +29,14 @@ public enum MissionErrorCode implements BaseErrorCode {
             HttpStatus.CONFLICT,
             "MISSION_400_3",
             "이미 종료된 미션입니다."
+    ),
+    STORE_MISSION_LIST_NOT_FOUND(
+            HttpStatus.NOT_FOUND,
+            "MISSION404_2",
+            "가게에 해당하는 미션이 없습니다."
     )
+    ;
+
 
     ;
 
