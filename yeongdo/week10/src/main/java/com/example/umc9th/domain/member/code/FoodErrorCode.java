@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum FoodErrorCode implements BaseErrorCode {
 
-    NOT_FOUND(HttpStatus.NOT_FOUND,
+    FOOD_NOT_FOUND(HttpStatus.NOT_FOUND,
             "FOOD404_1",
             "음식을 찾을 수 없습니다."),
     ;

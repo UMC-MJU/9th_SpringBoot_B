@@ -3,17 +3,14 @@ package com.example.umc9th.domain.member.entity;
 import com.example.umc9th.domain.member.entity.mapping.MemberFood;
 import com.example.umc9th.domain.member.enums.FoodCategory;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "food")
 public class Food {
     @Id
@@ -26,5 +23,11 @@ public class Food {
 
     @OneToMany(mappedBy = "food")
     private List<MemberFood> memberFoodList;
+
+    public static Food of(FoodCategory foodCategory) {
+        Food food = new Food();
+        food.foodCategory = foodCategory;
+        return food;
+    }
 
 }
