@@ -15,6 +15,7 @@ import com.example.umc9th.domain.store.entity.Store;
 import com.example.umc9th.domain.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class DummyDataInitializer implements CommandLineRunner {
     private final StoreRepository storeRepository;
     private final MissionRepository missionRepository;
     private final FoodRepository foodRepository;
-
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void run(String... args) {
 
@@ -47,7 +48,7 @@ public class DummyDataInitializer implements CommandLineRunner {
         Member member = Member.builder()
                 .name("영도")
                 .email("test@example.com")
-                .password("123456")
+                .password(passwordEncoder.encode("123456"))
                 .phoneNumber("01012345678")
                 .birth(LocalDate.of(2020, 1, 1))
                 .build();
