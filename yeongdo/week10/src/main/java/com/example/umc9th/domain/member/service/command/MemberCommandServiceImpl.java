@@ -19,8 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -41,7 +39,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
         String salt = passwordEncoder.encode(dto.password());
 
         // 사용자 생성 : 유저 / 관리자는 따로 API 만들어서 관리
-        Member member = MemberConverter.toMember(dto, salt, Role.ROLE_USER);
+        Member member = MemberConverter.toJoinMember(dto, salt, Role.ROLE_USER);
 
         MemberAddress address = MemberAddressConverter.toEntity(dto.address());
         member.setAddress(address);
