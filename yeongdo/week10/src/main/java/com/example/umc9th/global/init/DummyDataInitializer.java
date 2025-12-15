@@ -13,6 +13,7 @@ import com.example.umc9th.domain.mission.repository.MissionRepository;
 import com.example.umc9th.domain.mission.service.MissionCommandService;
 import com.example.umc9th.domain.store.entity.Store;
 import com.example.umc9th.domain.store.repository.StoreRepository;
+import com.example.umc9th.global.auth.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,6 +52,7 @@ public class DummyDataInitializer implements CommandLineRunner {
                 .password(passwordEncoder.encode("123456"))
                 .phoneNumber("01012345678")
                 .birth(LocalDate.of(2020, 1, 1))
+                .role(Role.ROLE_USER)
                 .build();
         member.addMemberFood(MemberFood.builder().food(korean).build());
         member.addMemberFood(MemberFood.builder().food(japanese).build());
