@@ -9,6 +9,7 @@ import com.example.umc9th.domain.member.enums.MemberStatus;
 import com.example.umc9th.domain.mission.entity.MissionAssignment;
 import com.example.umc9th.domain.notification.entity.setting.MemberNotificationSetting;
 import com.example.umc9th.global.BaseEntity;
+import com.example.umc9th.global.auth.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,7 +33,7 @@ public class Member extends BaseEntity {
     @Column(name = "name", length = 5, nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MemberAddress address;
 
     @Column(name = "status", nullable = false)
@@ -42,6 +43,12 @@ public class Member extends BaseEntity {
 
     @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
@@ -83,12 +90,20 @@ public class Member extends BaseEntity {
 
     // 연관관계 편의 메서드
     // MemberFoodList
+
+
     public void addMemberFood(MemberFood memberFood) {
         memberFoodList.add(memberFood);
         memberFood.setMember(this);
     }
     public void removeMemberFood(MemberFood memberFood) {
         memberFoodList.remove(memberFood);
+    }
+
+    public void setMemberFoodList(List<MemberFood> memberFoodList) {
+        for(MemberFood memberFood : memberFoodList) {
+            this.addMemberFood(memberFood);
+        }
     }
 
     // MemberConsentList
@@ -107,5 +122,11 @@ public class Member extends BaseEntity {
     }
     public void removeMemberRegionProgress(MemberRegionProgress memberRegionProgress) {
         memberRegionProgressList.remove(memberRegionProgress);
+    }
+
+    //MemberAddress
+    public void setAddress(MemberAddress address) {
+        this.address = address;
+        this.address.setMember(this);
     }
 }

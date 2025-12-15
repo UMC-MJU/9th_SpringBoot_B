@@ -2,6 +2,7 @@ package com.example.umc9th.domain.member.code;
 
 import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc9th.global.apiPayload.code.BaseSuccessCode;
+import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

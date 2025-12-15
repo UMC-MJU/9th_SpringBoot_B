@@ -23,7 +23,7 @@ public class FoodExistValidator implements ConstraintValidator<ExistFoods, List<
 
         if(!isValid) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(FoodErrorCode.NOT_FOUND.getMessage()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(FoodErrorCode.FOOD_NOT_FOUND.getMessage()).addConstraintViolation();
         }
 
         return isValid;
