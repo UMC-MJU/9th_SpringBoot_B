@@ -17,3 +17,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+jwt:
+   token:
+     secretKey: ${JWT_SECRET_KEY}
+     expiration: # 만료 시간
+       access: 14400000 # 4시간
