@@ -15,7 +15,7 @@ public class MemberConverter {
     }
 
     // DTO, Salted Password, Role -> Entity
-    public static Member toMember(
+    public static Member toJoinMember(
             MemberReqDto.JoinDto dto,
             String password,
             Role role
@@ -28,6 +28,13 @@ public class MemberConverter {
                 .phoneNumber(dto.phone())
                 .gender(dto.gender())
                 .birth(dto.birth())
+                .build();
+    }
+
+    public static MemberResDto.LoginDto toLoginDto(Member member, String accessToken) {
+        return MemberResDto.LoginDto.builder()
+                .memberId(member.getId())
+                .accessToken(accessToken)
                 .build();
     }
 }
