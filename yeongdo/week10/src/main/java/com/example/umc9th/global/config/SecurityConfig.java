@@ -1,5 +1,6 @@
 package com.example.umc9th.global.config;
 
+import com.example.umc9th.global.auth.jwt.AuthenticationEntryPointImpl;
 import com.example.umc9th.global.auth.jwt.JwtAuthFilter;
 import com.example.umc9th.global.auth.jwt.JwtUtil;
 import com.example.umc9th.global.auth.userdetails.CustomUserDetailsService;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -51,7 +53,8 @@ public class SecurityConfig {
                         .logoutUrl("/logout") // "/logout" 으로 로그아웃
                         .logoutSuccessUrl("/login?logout") // 로그아웃 성공 시 리다이텍트
                         .permitAll() // 로그아웃 페이지도 모든 사용자가 접근 가능
-                );
+                )
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticatonEntryPoint()));
 
         return http.build();
     }
@@ -64,6 +67,11 @@ public class SecurityConfig {
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
         return new JwtAuthFilter(jwtUtil, customUserDetailsService);
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticatonEntryPoint() {
+        return new AuthenticationEntryPointImpl();
     }
 
 }
