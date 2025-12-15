@@ -30,42 +30,30 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        try {
-            // 토큰 가져오기
-            String token = request.getHeader("Authorization");
-            // 토큰이 없거나 Bearer가 아니면 넘기기
-            if(token == null || !token.startsWith("Bearer ")){
-                filterChain.doFilter(request,response);
-                return;
-            }
-            //Bearer면 추출
-            token = token.replace("Bearer ", "");
-            // AccessToken 검증하기: 올바른 토큰이면
-            if (jwtUtil.isValid(token)) {
-                // 토큰에서 이메일 추출
-                String email = jwtUtil.getEmail(token);
-                // 인증 객체 생성: 이메일로 찾아온 뒤, 인증 객체 생성
-                UserDetails user = customUserDetailsService.loadUserByUsername(email);
-                Authentication auth = new UsernamePasswordAuthenticationToken(
-                        user,
-                        null,
-                        user.getAuthorities()
-                );
-                // 인증 완료 후 SecurityContextHolder에 넣기
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            };
-            filterChain.doFilter(request,response); // 다음 필터/최종 컨트롤러로 넘기기
-        } catch (Exception e) {
-            response.setContentType("application/json;charset=UTF-8");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-            ApiResponse<Void> errorResponse = ApiResponse.onFailure(
-                    GeneralErrorCode.UNAUTHORIZED,
-                    null
-            );
-
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(response.getOutputStream(), errorResponse);
+        // 토큰 가져오기
+        String token = request.getHeader("Authorization");
+        // 토큰이 없거나 Bearer가 아니면 넘기기
+        if(token == null || !token.startsWith("Bearer ")){
+            filterChain.doFilter(request,response);
+            return;
         }
+        //Bearer면 추출
+        token = token.replace("Bearer ", "");
+            // AccessToken 검증하기: 올바른 토큰이면
+        if (jwtUtil.isValid(token)) {
+            // 토큰에서 이메일 추출
+            String email = jwtUtil.getEmail(token);
+            // 인증 객체 생성: 이메일로 찾아온 뒤, 인증 객체 생성
+            UserDetails user = customUserDetailsService.loadUserByUsername(email);
+            Authentication auth = new UsernamePasswordAuthenticationToken(
+                    user,
+                    null,
+                    user.getAuthorities()
+            );
+            // 인증 완료 후 SecurityContextHolder에 넣기
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        };
+        filterChain.doFilter(request,response); // 다음 필터/최종 컨트롤러로 넘기기
     }
 }
